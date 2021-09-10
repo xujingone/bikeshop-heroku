@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BikeShop - Shop</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/ebe5cb8586.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <!-- header -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-cart-arrow-down"></i>
+            my Basket
+        </a>
+    </nav>
+
+    <div class="container-fluid">
+        <!-- nav -->
+        <div class="row ariane">
+            <nav aria-label="breadcrumb" class="col-12">
+                <ol class="breadcrumb">
+                    <li><a href="/" title="shop" id="lienHome">Shop</a>&nbsp;/&nbsp;</li>
+                    <li class="active">Basket</li>
+                </ol>
+            </nav>
+        </div>
+
+        <h1>Basket</h1>
+
+        <% if(dataCardBike.length){ %>
+            <!-- panier table -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Picture</th>
+                        <th scope="col">Model</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Suppr</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let i=0; i<dataCardBike.length;i++){ let item=dataCardBike[i]; %>
+                        <tr class="bg-light">
+                            <th scope="row">
+                                <%= i %>
+                            </th>
+                            <td><img src=<%=item.imageURL %> width="100" height="50" class="img-thumbnail" alt=
+                                <%=item.name %>>
+                            </td>
+                            <td>
+                                <%= item.name %>
+                            </td>
+                            <td>
+                                <form action="/update-shop" method="POST">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control col-4 quantity"
+                                            value='<%= item.quantity %>' name="quantity" min="1">
+                                        <input type="hidden" value='<%= i %>' name="index">
+                                        <button class="btn btn-outline-primary" type="submit">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </td>
+                            <td class="price">
+                                <%= item.price %>€
+                            </td>
+                            <td class="sum">
+                                <%= item.price * item.quantity %>€
+                            </td>
+                            <td>
+                                <a href='/delete-shop?index=<%= i %>' class="btn btn-outline-primary"><i
+                                        class="far fa-trash-alt"></i></a>
+                            </td>
+                        </tr>
+                        <% } %>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <th>Total Basket:</th>
+                                <th><span class="totalBasket">
+                                        <%= dataCardBike.reduce((acc, curr)=> (acc +
+                                            curr.price*curr.quantity), 0) %>€
+                                    </span></th>
+                                <td></td>
+                            </tr>
+
+                </tbody>
+            </table>
+            <form action="/create-checkout-session" method="POST">
+                <button class="btn btn-outline-primary float-right mr-4" name="checkout" value="Checkout">
+                    Checkout
+                </button>
+            </form>
+
+
+            <% }else{ %>
+                <div class="row font-italic text-danger ml-2">No article in the basket</div>
+                <% } %>
+
+    </div>
+    <!-- scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.jintegrity="
+        sha384-q8+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizcrossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
