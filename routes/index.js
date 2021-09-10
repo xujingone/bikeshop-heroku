@@ -44,7 +44,7 @@ router.get('/', function (req, res, next) {
 /* GET shop page. */
 router.get('/shop', function (req, res, next) {
   let dataCardBike = req.session.dataCardBike ?? [];
-  let name = req.query.name;
+  const name = req.query.name;
   if (!name) {
     res.render('shop', { dataCardBike });
     return;
