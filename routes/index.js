@@ -104,8 +104,8 @@ router.post('/create-checkout-session', async (req, res) => {
     payment_method_types: ['card'],
     line_items: line_items,
     mode: 'payment',
-    success_url: '<%= window.location.hostname %>/success',
-    cancel_url: '<%= window.location.hostname %>/',
+    success_url: `${req.headers.origin}/success`,
+    cancel_url: `${req.headers.origin}/`,
   });
 
   res.redirect(303, session.url);
