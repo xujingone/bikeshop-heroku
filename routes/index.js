@@ -38,7 +38,7 @@ var dataBike = [
   {
     name: 'NEWADD',
     imageURL: '/images/bike-1.jpg',
-    price: 3000,
+    price: 3000
   }
 ];
 /* GET main page. */
